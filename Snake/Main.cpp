@@ -1,5 +1,6 @@
 ﻿#include <Windows.h>
 #include <conio.h>
+#include <fstream>
 #include "Wall.h"
 #include "Snake.h"
 #include "Fruit.h"
@@ -17,6 +18,15 @@ extern vector <pair<int, string>> record(10, { 0, "Noname"s });
 
 int main() {
 
+    fstream file_record("D:\\VS\\record.txt");
+    for (int i = 0; i < 10; ++i) {
+        int number;
+        file_record >> number;
+        string name;
+        file_record >> name;
+        record[i] = { number,name };
+    }
+    file_record.close();
 
     // убираем курсор
     CONSOLE_CURSOR_INFO cursor{ 20 , false };
@@ -33,7 +43,6 @@ int main() {
     int command=0;
     int command_prev= command;    
     while (command != 27) {
-
         core.PrintMenu();
         command = _getch();
         space.Clear();
@@ -137,6 +146,17 @@ int main() {
         break;
         }
     }
+    file_record.open("D:\\VS\\record.txt", std::fstream::out |  std::fstream::trunc);
+    for (int i = 0; i < 10; ++i) {
+        int number;
+        number = record[i].first;
+        string name;
+        name = record[i].second;
+        file_record << number << " ";
+        file_record << name << endl;
+    }
+    file_record.close();
+
     return 0;
 }
 

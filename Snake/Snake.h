@@ -15,6 +15,7 @@ public:
 
     ~Snake() {
         WriteRecord();
+        m_lenght = 1;
     }
 
     std::vector<char> face = { '>','<','v','^' };
